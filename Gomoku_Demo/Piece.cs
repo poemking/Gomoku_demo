@@ -8,7 +8,8 @@ using System.Drawing;
 
 namespace Gomoku_Demo
 {
-    class Piece : PictureBox 
+    //建立抽象class為了建立出黑棋跟白棋而已,防止人家實作piece
+    abstract class Piece : PictureBox 
     {
         public Piece(int x, int y)
         {

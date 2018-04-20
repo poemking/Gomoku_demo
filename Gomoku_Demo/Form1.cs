@@ -15,8 +15,9 @@ namespace Gomoku_Demo
         public Form1()
         {
             InitializeComponent();
-            this.Controls.Add(new Piece(10, 20));
-            //test
+            this.Controls.Add(new BlackPiece(10, 20));
+            this.Controls.Add(new WhitePiece(100, 200));
+
         }
     }
 }

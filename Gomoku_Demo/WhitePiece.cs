@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Gomoku_Demo
 {
-    class BlackPiece : Piece 
+    class WhitePiece : Piece 
     {
-        public BlackPiece(int x, int y) : base(x, y) 
+        public WhitePiece(int x, int y) : base(x, y)
         {
-            this.Image = Properties.Resources.black;
+            this.Image = Properties.Resources.white;
         }
     }
 }
