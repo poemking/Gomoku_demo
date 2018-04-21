@@ -14,28 +14,62 @@ namespace Gomoku_Demo
         private static readonly int NODE_RADIUS = 10;
         private static readonly int NODE_DISTANCE = 75;
 
+        private Piece[,] pieces = new Piece[9, 9];
+
         public bool CanBePlaced(int x, int y)
         {
             //TODO: 找出最近的節點 (Node)
-            Point nodeId = FindTheClosetNode(x, y);
+            Point nodeId = findTheClosetNode(x, y);
 
             //TODO: 如果沒有的話, 回傳false
             if (nodeId == NO_MATCH_NODE)
                 return false;
 
             //TODO: 如果有的話, 檢查是否已經棋子存在
+            if (pieces[nodeId.X, nodeId.Y] != null)
+                return false;
 
             return true;
         }
 
-
-        private Point FindTheClosetNode(int x, int y)
+        public Piece PlaceAPiece(int x, int y, PieceType type)
         {
-            int nodeIdX = FindTheClosetNode(x);
+            //TODO: 找出最近的節點 (Node)
+            Point nodeId = findTheClosetNode(x, y);
+
+            //TODO: 如果沒有的話, 回傳null
+            if (nodeId == NO_MATCH_NODE)
+                return null;
+
+            //TODO: 如果有的話, 檢查是否已經棋子存在
+            if (pieces[nodeId.X, nodeId.Y] != null)
+                return null;
+            //TODO: 根據Type 產生對應的棋子
+            Point formPos = convertToFormPosition(nodeId);
+            if (type == PieceType.BLACK)
+                pieces[nodeId.X, nodeId.Y] = new BlackPiece(formPos.X, formPos.Y); //X的棋盤座標轉換成視窗座標
+            else if (type == PieceType.WHITE)
+                pieces[nodeId.X, nodeId.Y] = new WhitePiece(formPos.X, formPos.Y); //Y的棋盤座標轉換成視窗座標
+
+            return pieces[nodeId.X, nodeId.Y]; //回傳計算出來的棋子
+        }
+
+        private Point convertToFormPosition(Point nodeId)
+        {
+            Point formPositon = new Point();
+            formPositon.X = nodeId.X * NODE_DISTANCE + OFFSET;
+            formPositon.Y = nodeId.Y * NODE_DISTANCE + OFFSET;
+            return formPositon;
+
+        }
+
+        private Point findTheClosetNode(int x, int y)
+        {
+            int nodeIdX = findTheClosetNode(x);
             if (nodeIdX == -1)
                 return NO_MATCH_NODE;
 
-            int nodeIdY = FindTheClosetNode(y);
+            int nodeIdY = findTheClosetNode(y);
             if (nodeIdY == -1) 
                 return NO_MATCH_NODE;
 
@@ -43,7 +77,7 @@ namespace Gomoku_Demo
         }
 
         //把二維問題換成一維問題
-        private int FindTheClosetNode(int pos)
+        private int findTheClosetNode(int pos)
         {
             if (pos < OFFSET - NODE_RADIUS)
                 return -1;
