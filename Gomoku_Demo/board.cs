@@ -8,7 +8,7 @@ namespace Gomoku_Demo
 {
     class Board
     {
-        private static readonly int NODE_COUNT = 9;
+        public static readonly int NODE_COUNT = 9;
         private static readonly Point NO_MATCH_NODE = new Point(-1, -1); //表示Board上不存在的點
 
         private static readonly int OFFSET = 75;
@@ -16,6 +16,9 @@ namespace Gomoku_Demo
         private static readonly int NODE_DISTANCE = 75;
 
         private Piece[,] pieces = new Piece[NODE_COUNT, NODE_COUNT];
+
+        private Point lastPlaceNode = NO_MATCH_NODE;
+        public Point LastPlaceNode { get { return lastPlaceNode; } }
 
         //給一個座標點,找出棋盤上面現在放置什麼顏色的棋子
         public PieceType GetPieceType(int nodeIdX, int nodeIdY)
@@ -61,6 +64,9 @@ namespace Gomoku_Demo
                 pieces[nodeId.X, nodeId.Y] = new BlackPiece(formPos.X, formPos.Y); //X的棋盤座標轉換成視窗座標
             else if (type == PieceType.WHITE)
                 pieces[nodeId.X, nodeId.Y] = new WhitePiece(formPos.X, formPos.Y); //Y的棋盤座標轉換成視窗座標
+
+            // 紀錄最後下棋子的位置
+            lastPlaceNode = nodeId;
 
             return pieces[nodeId.X, nodeId.Y]; //回傳計算出來的棋子
         }

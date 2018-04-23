@@ -13,6 +13,9 @@ namespace Gomoku_Demo
         //private bool isBlack = true; 簡化成PieceType
         private PieceType currentPlayer = PieceType.BLACK;
 
+        private PieceType winner = PieceType.NONE;
+        public PieceType Winner { get { return winner; } }
+
         public bool CanBePlaced(int x, int y)
         {
             return board.CanBePlaced(x, y);
@@ -23,8 +26,10 @@ namespace Gomoku_Demo
             Piece piece = board.PlaceAPiece(x, y, currentPlayer);
             if (piece != null)
             {
-                //this.Controls.Add(piece); 目前沒在視窗裡面撰寫,故要回傳piece出去給form去call
+                CheckWinner(); //檢查是否現在下棋的人獲勝
 
+                //this.Controls.Add(piece); 目前沒在視窗裡面撰寫,故要回傳piece出去給form去call
+                //交換選手
                 if (currentPlayer == PieceType.BLACK)
                     currentPlayer = PieceType.WHITE;
                 else if (currentPlayer == PieceType.WHITE)
@@ -42,7 +47,39 @@ namespace Gomoku_Demo
         //TODO: how to check winner when board is putted five counts
         private void CheckWinner()
         {
+            int centerX = board.LastPlaceNode.X;
+            int centerY = board.LastPlaceNode.Y;
 
+            //檢查八個不同方向
+            for (int xDir = -1; xDir <= 1; xDir++)
+            {
+                for (int yDir = -1; yDir <= 1; yDir++)
+                {
+                    //排除中間的情況
+                    if (xDir == 0 && yDir == 0)
+                        continue; //略過迴圈剩下部分,直接跳到下次迴圈開始
+
+                    //紀錄現在看到幾顆相同棋子
+                    int count = 1;
+                    while (count < 5)
+                    {
+                        int targetX = centerX + count * xDir; //棋子中心點+count(幾顆棋子)*xDir(座標方向)=目標棋子
+                        int targetY = centerX + count * yDir; //棋子中心點+count(幾顆棋子)*xDir(座標方向)=目標棋子
+
+                        //檢查顏色是否相同
+                        if (targetX < 0 || targetX >= Board.NODE_COUNT ||
+                            targetY < 0 || targetY >= Board.NODE_COUNT ||
+                            board.GetPieceType(targetX, targetY) != currentPlayer)
+                            break;
+
+                        count++;
+                    }
+
+                    //檢查是否看到五顆棋子
+                    if (count == 5)
+                        winner = currentPlayer;
+                }
+            }
         }
     }
 }

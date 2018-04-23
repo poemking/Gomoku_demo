@@ -31,6 +31,16 @@ namespace Gomoku_Demo
             if (piece != null)
             {
                 this.Controls.Add(piece);
+
+                //檢查是否有人獲勝
+                if (game.Winner == PieceType.BLACK)
+                {
+                    MessageBox.Show("黑色獲勝");
+                }
+                else if (game.Winner == PieceType.WHITE)
+                {
+                    MessageBox.Show("白色獲勝");
+                }
             }
         }
 
