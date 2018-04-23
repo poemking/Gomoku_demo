@@ -17,6 +17,15 @@ namespace Gomoku_Demo
 
         private Piece[,] pieces = new Piece[NODE_COUNT, NODE_COUNT];
 
+        //給一個座標點,找出棋盤上面現在放置什麼顏色的棋子
+        public PieceType GetPieceType(int nodeIdX, int nodeIdY)
+        {
+            if (pieces[nodeIdX, nodeIdY] == null)
+                return PieceType.NONE;
+            else
+                return pieces[nodeIdX, nodeIdY].GetPieceType();
+        }
+
         public bool CanBePlaced(int x, int y)
         {
             //TODO: 找出最近的節點 (Node)
