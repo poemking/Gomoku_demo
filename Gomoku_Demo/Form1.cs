@@ -23,6 +23,14 @@ namespace Gomoku_Demo
             MaximizeBox = false;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             //FormBorderStyle = FormBorderStyle.FixedDialog;
+
+            /*
+             TODO:
+                1.嘗試解決最後棋子下在五顆連線的中間，而不是邊邊時無法判斷勝利的 bug
+                2.嘗試實作重新啟動遊戲的功能
+                3.在有人快勝利時提出警告訊息
+                4.想出一個方法讓白色自動下子 (例如：最簡單的作法，隨便找個讓白色隨機亂下)
+             */
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
