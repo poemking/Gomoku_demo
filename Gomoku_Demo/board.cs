@@ -24,6 +24,7 @@ namespace Gomoku_Demo
                 return PieceType.NONE;
             else
                 return pieces[nodeIdX, nodeIdY].GetPieceType();
+            //test 123
         }
 
         public bool CanBePlaced(int x, int y)
