@@ -23,7 +23,7 @@ namespace Gomoku_Demo
             Width = Properties.Resources.board.Width;
             //MinimizeBox = false;
             MaximizeBox = false;
-            //FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             //FormBorderStyle = FormBorderStyle.FixedDialog;
         }
 

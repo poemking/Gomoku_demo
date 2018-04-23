@@ -8,13 +8,14 @@ namespace Gomoku_Demo
 {
     class Board
     {
+        private static readonly int NODE_COUNT = 9;
         private static readonly Point NO_MATCH_NODE = new Point(-1, -1); //表示Board上不存在的點
 
         private static readonly int OFFSET = 75;
         private static readonly int NODE_RADIUS = 10;
         private static readonly int NODE_DISTANCE = 75;
 
-        private Piece[,] pieces = new Piece[9, 9];
+        private Piece[,] pieces = new Piece[NODE_COUNT, NODE_COUNT];
 
         public bool CanBePlaced(int x, int y)
         {
@@ -66,11 +67,11 @@ namespace Gomoku_Demo
         private Point findTheClosetNode(int x, int y)
         {
             int nodeIdX = findTheClosetNode(x);
-            if (nodeIdX == -1)
+            if (nodeIdX == -1 || nodeIdX >= NODE_COUNT) //要消除邊界0-8以上的Idx,故>=
                 return NO_MATCH_NODE;
 
             int nodeIdY = findTheClosetNode(y);
-            if (nodeIdY == -1) 
+            if (nodeIdY == -1 || nodeIdY >= NODE_COUNT) //要消除邊界0-8以上的Idx,故>=
                 return NO_MATCH_NODE;
 
             return new Point(nodeIdX, nodeIdY); //Point 回傳時,需要記憶體回傳x,y value,所以要new出來
