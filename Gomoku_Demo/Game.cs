@@ -15,6 +15,7 @@ namespace Gomoku_Demo
 
         private PieceType winner = PieceType.NONE;
         public PieceType Winner { get { return winner; } }
+        public int[,] countPieceRecord = new int[3, 3]; //紀錄八個方向相同顏色棋子個數
 
         public bool CanBePlaced(int x, int y)
         {
@@ -75,11 +76,35 @@ namespace Gomoku_Demo
                         count++;
                     }
 
-                    //檢查是否看到五顆棋子
-                    if (count == 5)
+                    //檢查是否看到五顆棋子,但無法處理五顆連線的中間bug,下面增加isWinnerExist方法解決
+                    //if (count == 5)
+                    // winner = currentPlayer;
+
+                    //解決最後棋子下在五顆連線的中間，而不是邊邊時無法判斷勝利的 bug
+                    countPieceRecord[xDir + 1, yDir + 1] = count - 1; //xyDir 從-1開始,為了讓[,]_idx從0開始而+1的
+
+                    if (isWinnerExist(countPieceRecord))
                         winner = currentPlayer;
+
                 }
             }
+        }
+
+        //check winner exist or not
+        private bool isWinnerExist(int[,] record)
+        {
+            int result1 = record[0, 1] + record[2, 1]; // 橫   →
+            int result2 = record[1, 0] + record[1, 2]; // 直   ↓
+            int result3 = record[0, 2] + record[2, 0]; // 斜   ↙
+            int result4 = record[0, 0] + record[2, 2]; // 反斜 ↘
+
+            if (result1 == 4 || result2 == 4 || result3 == 4 || result4 == 4)
+            {
+                // winner exist
+                return true;
+            }
+
+            return false;
         }
     }
 }
