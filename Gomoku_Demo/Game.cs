@@ -76,10 +76,9 @@ namespace Gomoku_Demo
                         count++;
                     }
 
-                    //檢查是否看到五顆棋子,但無法處理五顆連線的中間bug,下面增加isWinnerExist方法解決
-                    //if (count == 5)
-                    // winner = currentPlayer;
-
+                    //檢查是否看到五顆棋子,但無法處理中間棋子最後下的bug,增加下列處理方式
+                    if (count == 5)
+                        winner = currentPlayer;
                     //解決最後棋子下在五顆連線的中間，而不是邊邊時無法判斷勝利的 bug
                     countPieceRecord[xDir + 1, yDir + 1] = count - 1; //xyDir 從-1開始,為了讓[,]_idx從0開始而+1的
 
