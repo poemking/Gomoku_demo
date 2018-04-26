@@ -31,6 +31,7 @@ namespace Gomoku_Demo
                 3.在有人快勝利時提出警告訊息
                 4.想出一個方法讓白色自動下子 (例如：最簡單的作法，隨便找個讓白色隨機亂下)
              */
+             //test my pc
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
